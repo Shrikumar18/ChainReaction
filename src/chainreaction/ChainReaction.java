@@ -30,11 +30,40 @@ public class ChainReaction {
             }
         }
         printMatrix(s);
-        while(gameOver(s)!=1)
+        int a,b;
+        System.out.println("\nEnter input for User 1:");
+        a = scan.nextInt();
+        b = scan.nextInt();
+         l = "1";
+        doOperation(s,a,b,l);
+        printMatrix(s);
+        System.out.println("\nEnter input for User 2:");
+        a = scan.nextInt();
+        b = scan.nextInt();
+         l = "2";
+        doOperation(s,a,b,l);
+        printMatrix(s);
+        while(true)
         {
-            getInput(s);
-        } 
-        System.out.println("Game Over\n  Player "+s[0][0]+" won");
+            if(gameOver(s)==1)
+                break;
+            else
+                getInput1(s);
+            if(gameOver(s)==1)
+                break;
+            else
+                getInput2(s);
+        }
+       char temp = 0;
+       for(i=0;i<5;i++)
+       {
+           for(j=0;j<5;j++)
+           {
+               if(s[i][j].charAt(0)!='-')
+                   temp = s[i][j].charAt(0);
+           }
+       }
+       System.out.println("Player "+temp+" wins");
         }
 
     public static void printMatrix(String[][] s) {
@@ -50,7 +79,7 @@ public class ChainReaction {
        }
     }
 
-    public static void getInput(String[][] s) {
+    public static void getInput1(String[][] s) {
         int a,b;
         System.out.println("\nEnter input for User 1:");
         a = scan.nextInt();
@@ -65,6 +94,10 @@ public class ChainReaction {
         doOperation(s,a,b,l);
         isExcited(s,l);
         printMatrix(s);
+        }
+        public static void getInput2(String[][] s)
+        {
+        int a,b;
         System.out.println("\nEnter input for User 2:");
         a = scan.nextInt();
         b = scan.nextInt();
@@ -81,22 +114,28 @@ public class ChainReaction {
     }
 
     public static int gameOver(String[][] s) {
-        char s1 = s[0][0].charAt(0);
-        int i,j,flag = 0;
+        char s1 = 0 ;
+        int i,j;
         for(i=0;i<5;i++)
         {
             for(j=0;j<5;j++)
             {
-                if(s[i][j].charAt(0)!=s1)
-                    flag = 1;
+                if(s[i][j].charAt(0)!='-')
+                {
+                    s1 = s[i][j].charAt(0);
+                    break;
+                }
             }
         }
-        if(flag==1)
-            return 0;
-        else if(s1=='-')
-            return 0;
-        else
-            return 1;
+        for(i=0;i<5;i++)
+        {
+            for(j=0;j<5;j++)
+            {
+                if(s[i][j].charAt(0)!='-' && s[i][j].charAt(0)!=s1)
+                    return 0;
+            }
+        }
+        return 1;
     }
 
     private static void doOperation(String[][] s, int a, int b, String l) {
